@@ -3,6 +3,7 @@ package com.example.calculadoradivises;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -29,8 +30,29 @@ public class MainActivity extends AppCompatActivity {
         Button btnCE= (Button) findViewById(R.id.btnCE);
         Button btnBorrar = (Button) findViewById(R.id.btnBorrar);
         Button btnIgual = (Button) findViewById(R.id.btnIgual);
+        Button btnDollar = (Button) findViewById(R.id.btnDollar);
+        Button btnLliura = (Button) findViewById(R.id.btnLliures);
+        Button btnYen = (Button) findViewById(R.id.btnYen);
+        Button btnYuan = (Button) findViewById(R.id.btnYuan);
+
+        boolean dollarSeted = false;
+        boolean lliuraSeted = false;
+        boolean yenSeted = false;
+        boolean yuanSeted = false;
+
+        btnDollar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        private void seleccionarDivisa(Button boto) {
+
+            Button[] botons = {btnLliura, btnDollar, btnYen, btnYuan};
 
 
+        }
 
     }
 }
