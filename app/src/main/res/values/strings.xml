@@ -2,4 +2,8 @@
     <string name="app_name">CalculadoraDivises</string>
     <string name="txtEuros">Euros</string>
     <string name="txtInputDefault">Enter an amout</string>
+    <string name="btnLliures">Pound</string>
+    <string name="btnDollar">Dollar</string>
+    <string name="btnYen">Yen</string>
+    <string name="btnYuan">Yuan</string>
 </resources>
