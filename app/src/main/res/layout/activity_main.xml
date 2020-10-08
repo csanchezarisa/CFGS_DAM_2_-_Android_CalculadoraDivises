@@ -185,4 +185,160 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.75" />
 
+    <Button
+        android:id="@+id/btn7"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="7"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        app:layout_constraintBottom_toTopOf="@+id/gLineFila1"
+        app:layout_constraintEnd_toStartOf="@+id/gLineColum1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gLineMiddle" />
+
+    <Button
+        android:id="@+id/btn8"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="8"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        app:layout_constraintBottom_toTopOf="@+id/gLineFila1"
+        app:layout_constraintEnd_toStartOf="@+id/gLineColum2"
+        app:layout_constraintStart_toStartOf="@+id/gLineColum1"
+        app:layout_constraintTop_toTopOf="@+id/gLineMiddle" />
+
+    <Button
+        android:id="@+id/btn9"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="9"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        app:layout_constraintBottom_toTopOf="@+id/gLineFila1"
+        app:layout_constraintEnd_toStartOf="@+id/gLineColum3"
+        app:layout_constraintStart_toStartOf="@+id/gLineColum2"
+        app:layout_constraintTop_toTopOf="@+id/gLineMiddle" />
+
+    <Button
+        android:id="@+id/btn4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        app:layout_constraintBottom_toTopOf="@+id/gLineFila2"
+        app:layout_constraintEnd_toStartOf="@+id/gLineColum1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gLineFila1" />
+
+    <Button
+        android:id="@+id/btn5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="5"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        app:layout_constraintBottom_toTopOf="@+id/gLineFila2"
+        app:layout_constraintEnd_toStartOf="@+id/gLineColum2"
+        app:layout_constraintStart_toStartOf="@+id/gLineColum1"
+        app:layout_constraintTop_toTopOf="@+id/gLineFila1" />
+
+    <Button
+        android:id="@+id/btn6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="6"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        app:layout_constraintBottom_toTopOf="@+id/gLineFila2"
+        app:layout_constraintEnd_toStartOf="@+id/gLineColum3"
+        app:layout_constraintStart_toStartOf="@+id/gLineColum2"
+        app:layout_constraintTop_toTopOf="@+id/gLineFila1" />
+
+    <Button
+        android:id="@+id/btn1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        app:layout_constraintBottom_toTopOf="@+id/gLineFila3"
+        app:layout_constraintEnd_toStartOf="@+id/gLineColum1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gLineFila2" />
+
+    <Button
+        android:id="@+id/btn0"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="0"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gLineColum1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gLineFila3" />
+
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        app:layout_constraintBottom_toTopOf="@+id/gLineFila3"
+        app:layout_constraintEnd_toStartOf="@+id/gLineColum2"
+        app:layout_constraintStart_toStartOf="@+id/gLineColum1"
+        app:layout_constraintTop_toTopOf="@+id/gLineFila2" />
+
+    <Button
+        android:id="@+id/btnComa"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text=","
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gLineColum3"
+        app:layout_constraintStart_toStartOf="@+id/gLineColum2"
+        app:layout_constraintTop_toBottomOf="@+id/btn3"
+        app:layout_constraintVertical_bias="0.466" />
+
+    <Button
+        android:id="@+id/btn3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="3"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        app:layout_constraintBottom_toTopOf="@+id/gLineFila3"
+        app:layout_constraintEnd_toStartOf="@+id/gLineColum3"
+        app:layout_constraintStart_toStartOf="@+id/gLineColum2"
+        app:layout_constraintTop_toTopOf="@+id/gLineFila2"
+        app:layout_constraintVertical_bias="0.483" />
+
+    <Button
+        android:id="@+id/btnIgual"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="="
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/gLineColum3"
+        app:layout_constraintTop_toTopOf="@+id/gLineFila2" />
+
+    <Button
+        android:id="@+id/btnBorrar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="<-"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        app:layout_constraintBottom_toTopOf="@+id/gLineFila2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/gLineColum3"
+        app:layout_constraintTop_toTopOf="@+id/gLineFila1" />
+
+    <Button
+        android:id="@+id/btnCE"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="CE"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        app:layout_constraintBottom_toTopOf="@+id/gLineFila1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/gLineColum3"
+        app:layout_constraintTop_toTopOf="@+id/gLineMiddle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
