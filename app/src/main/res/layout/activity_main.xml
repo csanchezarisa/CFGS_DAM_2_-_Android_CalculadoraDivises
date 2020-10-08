@@ -38,6 +38,7 @@
         android:id="@+id/txtEuros"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="@string/txtEuros"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintBottom_toTopOf="@+id/gLineInput"
