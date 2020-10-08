@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Pepe</string>
+    <string name="textBotoSaludar">Saludar</string>
+    <string name="textBotoEsborrar">Esborrar</string>
+    <string name="edtNom">entra en nom</string>
+    <string name="edtNumero">Entra un número</string>
+    <string name="btnIncrementa">Incrementa</string>
+    <string name="edtNumeroHint">Escriu aquí un número</string>
+    <string name="txvNumero">Número</string>
+    <string name="edtTextHint">Escriu un text</string>
+
+
+</resources>

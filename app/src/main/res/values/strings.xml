@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CalculadoraDivises</string>
+    <string name="txtEuros">Euros</string>
+    <string name="txtInputDefault">Enter an amout</string>
+</resources>

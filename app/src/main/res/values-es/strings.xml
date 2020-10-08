@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CalculadoraDivisas</string>
+    <string name="txtEuros">Euros</string>
+    <string name="txtInputDefault">Introduce una cantidad</string>
+</resources>
