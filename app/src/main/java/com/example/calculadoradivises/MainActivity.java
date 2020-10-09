@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity {
 
     // Vinculació dels elements del view a codi
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     float valorLliura = 0;
     float valorYen = 0;
     float valorYuan = 0;
-    float valorDeConversioSeleccionat = 0;
+    float valorDeConversioSeleccionat = -1;
 
     // Emmagatzemarà de manera temporal el valor de conversió que introdueix l'usuari
     float revisarValorConversio = -1;
@@ -290,11 +292,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // BOTO ESBORRAR
+        // BOTÓ ESBORRAR
         btnBorrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 esborrar();
+            }
+        });
+
+        // BOTÓ IGUAL
+        btnIgual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ferConversio();
             }
         });
 
@@ -356,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Prova a convertir en número el valor introduit
                 try {
-                    revisarValorConversio = Float.parseFloat(edtValorDivisa.getText().toString());
+                    revisarValorConversio = Float.parseFloat(treureComaPerPunt(edtValorDivisa.getText().toString()));
 
                     // Si, tot i ser número, el valor introduit és negatiu, llança una excepció fent que "peti" el programa i sorti del try
                     if (revisarValorConversio <= 0) {
@@ -441,7 +451,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         canviarColorBotoDivisa(null);
-        valorDeConversioSeleccionat = 0;
+        valorDeConversioSeleccionat = -1;
 
     }
 
@@ -468,6 +478,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (textActualInput.charAt(textActualInput.length() - 1) == ',')
             comaPosada = false;
+
+        if (decimalsIntroduits > 0)
+            decimalsIntroduits--;
 
         if (textActualInput.length() > 1 && inputInicialitzat) {
             for (int i = 0; i < textActualInput.length() - 1; i++) {
@@ -508,4 +521,75 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    // Es fa la conversió i es mostra el resultat, tractat, en el txtOutput
+    private void ferConversio() {
+
+        // Revisa que l'input hagi estat inicialitzat i hi hagi alguna divisa correctament seleccionada
+        if (inputInicialitzat && valorDeConversioSeleccionat >= 0) {
+
+            try {
+                // Es defineix el format del decimal
+                DecimalFormat df = new DecimalFormat("0.00");
+
+                /* Fa la operació, canviant la coma pel punt del input per poder operar, i canviat el punt per la coma per poder mostrar-ho al output.
+                * També s'arrodoneix a dos decimals per l'output */
+                float input = Float.parseFloat(treureComaPerPunt(txtInput.getText().toString()));
+                float resultat =  input * valorDeConversioSeleccionat;
+                txtOutput.setText(treurePuntPerComa(String.valueOf(df.format(resultat))));
+
+            }
+            catch (Exception e) {
+
+                Toast.makeText(getApplicationContext(), getString(R.string.doConversionError), Toast.LENGTH_LONG).show();
+
+            }
+
+        }
+        else {
+            Toast.makeText(getApplicationContext(), getString(R.string.doConversionError), Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    // Analitza un string i el retorna canviant la coma per un punt
+    private String treureComaPerPunt(String string) {
+
+        String stringSenseComa = "";
+
+        for (int i = 0; i < string.length(); i++) {
+
+            if (string.charAt(i) == ',') {
+                stringSenseComa = stringSenseComa + '.';
+            }
+            else {
+                stringSenseComa = stringSenseComa + string.charAt(i);
+            }
+
+        }
+
+        return stringSenseComa;
+
+    }
+
+
+    // Analitza un string i el retorna canviat el punt per una coma
+    private String treurePuntPerComa(String string) {
+
+        String stringSensePunt = "";
+
+        for (int i = 0; i < string.length(); i++) {
+
+            if (string.charAt(i) == '.') {
+                stringSensePunt = stringSensePunt + ',';
+            }
+            else {
+                stringSensePunt = stringSensePunt + string.charAt(i);
+            }
+
+        }
+
+        return stringSensePunt;
+
+    }
 }
