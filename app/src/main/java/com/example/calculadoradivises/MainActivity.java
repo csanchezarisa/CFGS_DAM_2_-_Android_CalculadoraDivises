@@ -53,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
     // Emmagatzemarà de manera temporal el valor de conversió que introdueix l'usuari
     float revisarValorConversio = -1;
 
+    // Revisa quan l'input ha estat inicialitzat
+    boolean inputInicialitzat = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         btnYuan = (Button) findViewById(R.id.btnYuan);
         botonsDivises = new Button[]{btnLliura, btnDollar, btnYen, btnYuan};
 
+        // .: 1. BOTONS DIVISES :.
         // BOTÓ DOLLAR - FUNCIONS
         btnDollar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         btnYen.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                reiniciarDivisa("dollar");
+                reiniciarDivisa("yen");
                 return true;
             }
         });
@@ -150,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
         btnYuan.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                reiniciarDivisa("dollar");
+                reiniciarDivisa("yuan");
                 return true;
             }
         });
@@ -175,13 +179,37 @@ public class MainActivity extends AppCompatActivity {
         btnLliura.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                reiniciarDivisa("dollar");
+                reiniciarDivisa("pound");
                 return true;
+            }
+        });
+
+
+        // .: 2. BOTONS CALCULADORA - NUMEROS :.
+
+
+        // .: 3. BOTONS CALCULADORA - FUNCIONALITATS :.
+        // BOTÓ CE
+        btnCE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                netejarInput();
+                netejarOutput();
+            }
+        });
+
+        // BOTO ESBORRAR
+        btnBorrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                esborrar();
             }
         });
 
     }
 
+
+    // Canvia els colors dels botons de divises i marca el que es selecciona
     private void canviarColorBotoDivisa(Button botoSeleccionat) {
         int posicioBoto = 0;
 
@@ -196,11 +224,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    // Obre un cuadre de diàlog per que l'usuari introdueixi un valor
     private void demanarValorDeConversio(String divisa) {
         AlertDialog ad;
         divisa = divisa.toLowerCase();
         final String divisaSeleccionada = divisa;
 
+        // Segons quin botó cridi aquest mètode canviarà la variable que mostrarà el missatge
         switch (divisa) {
 
             case "pound": divisa = getString(R.string.btnLliures);
@@ -218,6 +249,7 @@ public class MainActivity extends AppCompatActivity {
             default: divisa = "";
         }
 
+        // Prepàra el quadre de diàlog per que tingui un input i personalitza el missatge que mostra segons els definits en @string
         ad = new AlertDialog.Builder(this).create();
         ad.setTitle(getString(R.string.setValueAlertDialogTitle) + " " + divisa);
         ad.setMessage(getString(R.string.setValueAlertDialogMessage) + " " + divisa);
@@ -225,17 +257,21 @@ public class MainActivity extends AppCompatActivity {
         final EditText edtValorDivisa = new EditText(this);
         ad.setView(edtValorDivisa);
 
+        // Botó positiu revisarà el valor introdueit. Si es correcte farà les opcions pertinents, sino, mostrarà un misstge d'error
         ad.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.acceptButton), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                // Prova a convertir en número el valor introduit
                 try {
                     revisarValorConversio = Float.parseFloat(edtValorDivisa.getText().toString());
 
+                    // Si, tot i ser número, el valor introduit és negatiu, llança una excepció fent que "peti" el programa i sorti del try
                     if (revisarValorConversio <= 0) {
                         throw new Exception("Valor negatiu");
                     }
 
+                    // Comprova quina és la divisa seleccionada per fer les operacions sobre una o altre divisa
                     switch (divisaSeleccionada) {
                         case "dollar":
                             valorDollar = revisarValorConversio;
@@ -274,6 +310,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Botó negatiu
         ad.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancelar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 revisarValorConversio = -1;
@@ -282,6 +319,8 @@ public class MainActivity extends AppCompatActivity {
         ad.show();
     }
 
+
+    // Reinicia el valor de la divisa seleccionada
     private void reiniciarDivisa(String divisa) {
 
         divisa = divisa.toLowerCase();
@@ -310,6 +349,36 @@ public class MainActivity extends AppCompatActivity {
         }
 
         canviarColorBotoDivisa(null);
+
+    }
+
+
+    // "Neteja" el TextView Input, per que mostri el missatge predeterminat
+    private void netejarInput() {
+        txtInput.setText(getString(R.string.txtInputDefault));
+        inputInicialitzat = false;
+    }
+
+
+    // "Neteja" el TextView Output, per que mostri el valor 0
+    private void netejarOutput() {
+        txtOutput.setText("0");
+    }
+
+
+    private void esborrar() {
+        String nouValorOutput = "";
+
+        if (txtOutput.getText().toString().length() > 1) {
+            for (int i = 0; i < txtOutput.getText().toString().length() - 1; i++) {
+                nouValorOutput = nouValorOutput + txtOutput.getText().toString().charAt(i);
+            }
+        }
+        else {
+            nouValorOutput = "0";
+        }
+
+        txtOutput.setText(nouValorOutput);
 
     }
 }
