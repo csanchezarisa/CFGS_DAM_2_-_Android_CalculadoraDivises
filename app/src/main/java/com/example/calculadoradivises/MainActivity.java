@@ -1,7 +1,9 @@
 package com.example.calculadoradivises;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.TypedArrayUtils;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,12 +32,13 @@ public class MainActivity extends AppCompatActivity {
         Button btnCE= (Button) findViewById(R.id.btnCE);
         Button btnBorrar = (Button) findViewById(R.id.btnBorrar);
         Button btnIgual = (Button) findViewById(R.id.btnIgual);
-        Button btnDollar = (Button) findViewById(R.id.btnDollar);
-        Button btnLliura = (Button) findViewById(R.id.btnLliures);
-        Button btnYen = (Button) findViewById(R.id.btnYen);
-        Button btnYuan = (Button) findViewById(R.id.btnYuan);
+        final Button btnDollar = (Button) findViewById(R.id.btnDollar);
+        final Button btnLliura = (Button) findViewById(R.id.btnLliures);
+        final Button btnYen = (Button) findViewById(R.id.btnYen);
+        final Button btnYuan = (Button) findViewById(R.id.btnYuan);
+        final Button[] botonsDivises = {btnLliura, btnDollar, btnYen, btnYuan};
 
-        boolean dollarSeted = false;
+        final boolean dollarSeted = false;
         boolean lliuraSeted = false;
         boolean yenSeted = false;
         boolean yuanSeted = false;
@@ -43,16 +46,53 @@ public class MainActivity extends AppCompatActivity {
         btnDollar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                seleccionarDivisa(botonsDivises, btnDollar);
             }
         });
 
-        private void seleccionarDivisa(Button boto) {
+        btnYen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                seleccionarDivisa(botonsDivises, btnYen);
+            }
+        });
 
-            Button[] botons = {btnLliura, btnDollar, btnYen, btnYuan};
+        btnYuan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                seleccionarDivisa(botonsDivises, btnYuan);
+            }
+        });
 
+        btnLliura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                seleccionarDivisa(botonsDivises, btnLliura);
+            }
+        });
+
+    }
+
+    private void seleccionarDivisa(Button[] botons, Button botoSeleccionat) {
+        int posicioBoto = 0;
+
+        for (int i = 0; i < botons.length; i++) {
+            if (botons[i] != botoSeleccionat) {
+                botons[i].setBackgroundColor(Color.WHITE);
+            }
+            else {
+                botons[i].setBackgroundColor(Color.GRAY);
+            }
+
+            if (!dollarSeted) {
+
+            }
 
         }
+
+    }
+
+    private void setejarValor() {
 
     }
 }
