@@ -7,4 +7,8 @@
     <string name="btnDollar">Dólar</string>
     <string name="btnYen">Yen</string>
     <string name="btnYuan">Yuan</string>
+    <string name="setValueAlertDialogTitle">Valor de </string>
+    <string name="setValueAlertDialogMessage">Introduce el valor de conversión de </string>
+    <string name="acceptButton">Aceptar</string>
+    <string name="setValueAlertDialogError">El valor no es válido</string>
 </resources>
