@@ -57,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
     // Revisa quan l'input ha estat inicialitzat
     boolean inputInicialitzat = false;
 
+    // Revisa si s'ha posat la coma i els decimals que s'han introduit
+    boolean comaPosada = false;
+    int decimalsIntroduits = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -267,6 +271,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Botó coma
+        btnComa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                introduirComa();
+            }
+        });
+
 
         // .: 3. BOTONS CALCULADORA - FUNCIONALITATS :.
         // BOTÓ CE
@@ -429,6 +441,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         canviarColorBotoDivisa(null);
+        valorDeConversioSeleccionat = 0;
 
     }
 
@@ -437,6 +450,8 @@ public class MainActivity extends AppCompatActivity {
     private void netejarInput() {
         txtInput.setText(getString(R.string.txtInputDefault));
         inputInicialitzat = false;
+        comaPosada = false;
+        decimalsIntroduits = 0;
     }
 
 
@@ -450,6 +465,9 @@ public class MainActivity extends AppCompatActivity {
     private void esborrar() {
         String textActualInput = txtInput.getText().toString();
         String nouValorInput = "";
+
+        if (textActualInput.charAt(textActualInput.length() - 1) == ',')
+            comaPosada = false;
 
         if (textActualInput.length() > 1 && inputInicialitzat) {
             for (int i = 0; i < textActualInput.length() - 1; i++) {
@@ -466,14 +484,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //
+    // Introdueix un número al darrera dels que ja hi han possats
     private void introduirNumero(int numero) {
-        if (inputInicialitzat) {
+        if (inputInicialitzat && decimalsIntroduits < 2) {
             txtInput.setText(txtInput.getText().toString() + numero);
+
+            if (comaPosada)
+                decimalsIntroduits++;
+
         }
-        else {
+        else if (!inputInicialitzat) {
             txtInput.setText(String.valueOf(numero));
             inputInicialitzat = true;
         }
     }
+
+
+    // Introdueix la coma decimal
+    private void introduirComa() {
+        if (!comaPosada && inputInicialitzat) {
+            txtInput.setText(txtInput.getText().toString() + ',');
+            comaPosada = true;
+        }
+    }
+
 }
