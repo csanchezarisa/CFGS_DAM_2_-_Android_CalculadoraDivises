@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -186,6 +187,85 @@ public class MainActivity extends AppCompatActivity {
 
 
         // .: 2. BOTONS CALCULADORA - NUMEROS :.
+        // Botó 0
+        btn0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                introduirNumero(0);
+            }
+        });
+
+        // Botó 1
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                introduirNumero(1);
+            }
+        });
+
+        // Botó 2
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                introduirNumero(2);
+            }
+        });
+
+        // Botó 3
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                introduirNumero(3);
+            }
+        });
+
+        // Botó 4
+        btn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                introduirNumero(4);
+            }
+        });
+
+        // Botó 5
+        btn5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                introduirNumero(5);
+            }
+        });
+
+        // Botó 6
+        btn6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                introduirNumero(6);
+            }
+        });
+
+        // Botó 7
+        btn7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                introduirNumero(7);
+            }
+        });
+
+        // Botó 8
+        btn8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                introduirNumero(8);
+            }
+        });
+
+        // Botó 9
+        btn9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                introduirNumero(9);
+            }
+        });
 
 
         // .: 3. BOTONS CALCULADORA - FUNCIONALITATS :.
@@ -366,19 +446,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // Esborra en 1 els valors del Output
     private void esborrar() {
-        String nouValorOutput = "";
+        String textActualInput = txtInput.getText().toString();
+        String nouValorInput = "";
 
-        if (txtOutput.getText().toString().length() > 1) {
-            for (int i = 0; i < txtOutput.getText().toString().length() - 1; i++) {
-                nouValorOutput = nouValorOutput + txtOutput.getText().toString().charAt(i);
+        if (textActualInput.length() > 1 && inputInicialitzat) {
+            for (int i = 0; i < textActualInput.length() - 1; i++) {
+                nouValorInput = nouValorInput + textActualInput.charAt(i);
             }
         }
         else {
-            nouValorOutput = "0";
+            nouValorInput = getString(R.string.txtInputDefault);
+            inputInicialitzat = false;
         }
 
-        txtOutput.setText(nouValorOutput);
+        txtInput.setText(nouValorInput);
 
+    }
+
+
+    //
+    private void introduirNumero(int numero) {
+        if (inputInicialitzat) {
+            txtInput.setText(txtInput.getText().toString() + numero);
+        }
+        else {
+            txtInput.setText(String.valueOf(numero));
+            inputInicialitzat = true;
+        }
     }
 }
