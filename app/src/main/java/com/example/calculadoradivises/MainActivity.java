@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (lliuraSeted) {
                     valorDeConversioSeleccionat = valorLliura;
-                    canviarColorBotoDivisa(btnDollar);
+                    canviarColorBotoDivisa(btnLliura);
                 }
                 else {
                     demanarValorDeConversio("pound");
@@ -382,7 +382,7 @@ public class MainActivity extends AppCompatActivity {
                             canviarColorBotoDivisa(btnDollar);
                             break;
 
-                        case "lliura":
+                        case "pound":
                             valorLliura = revisarValorConversio;
                             valorDeConversioSeleccionat = valorLliura;
                             lliuraSeted = true;
