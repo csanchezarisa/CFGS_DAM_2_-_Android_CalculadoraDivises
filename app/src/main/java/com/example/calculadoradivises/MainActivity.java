@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
@@ -62,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
     // Revisa si s'ha posat la coma i els decimals que s'han introduit
     boolean comaPosada = false;
     int decimalsIntroduits = 0;
+
+    // Revisa quan s'ha inicialitzat alguna divisa per mostrar un missatge informatiu
+    boolean primeraDivisaSeleccionada = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -324,6 +329,19 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        if (!primeraDivisaSeleccionada) {
+            mostrarInformacioRestablirDivisa();
+            primeraDivisaSeleccionada = true;
+        }
+
+    }
+
+
+    private void mostrarInformacioRestablirDivisa() {
+        View parentLayout = findViewById(android.R.id.content);
+        Snackbar snackbar = Snackbar.make(parentLayout, getString(R.string.infoRestablecerDivisa), Snackbar.LENGTH_LONG);
+
+        snackbar.show();
     }
 
 
