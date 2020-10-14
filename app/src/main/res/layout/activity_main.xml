@@ -102,49 +102,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/gLineResultat" />
 
-    <LinearLayout
-        android:id="@+id/layoutDivises"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/viewFonsOutput"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/gLineSeleccionarDivisa">
-
-        <Button
-            android:id="@+id/btnLliures"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#00FFFFFF"
-            android:text="@string/btnLliures" />
-
-        <Button
-            android:id="@+id/btnDollar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#00FFFFFF"
-            android:text="@string/btnDollar" />
-
-        <Button
-            android:id="@+id/btnYen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#00FFFFFF"
-            android:text="@string/btnYen" />
-
-        <Button
-            android:id="@+id/btnYuan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#00FFFFFF"
-            android:text="@string/btnYuan" />
-    </LinearLayout>
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gLineFila1"
         android:layout_width="wrap_content"
@@ -368,5 +325,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/gLineColum3"
         app:layout_constraintTop_toTopOf="@+id/gLineMiddle" />
+
+    <LinearLayout
+        android:id="@+id/mainButtons"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/gLineResultat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewFonsInput">
+
+        <Button
+            android:id="@+id/btnDivisa"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:autoSizeTextType="uniform"
+            android:text="@string/divisa" />
+
+        <Button
+            android:id="@+id/btnAfegirDivisa"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:autoSizeTextType="uniform"
+            android:text="@string/afegirDivisa" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

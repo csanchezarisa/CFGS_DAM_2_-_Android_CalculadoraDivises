@@ -13,9 +13,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.calculadoradivises.classes.divisa;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,11 +38,9 @@ public class MainActivity extends AppCompatActivity {
     Button btnCE;
     Button btnBorrar;
     Button btnIgual;
-    Button btnDollar;
-    Button btnLliura;
-    Button btnYen;
-    Button btnYuan;
-    Button[] botonsDivises;
+    Button btnDivisa;
+    Button btnAfegirDivisa;
+    ArrayList<divisa> divisesDisponibles = new ArrayList<divisa>();
 
     // Variables que controlen quan a una divisa se li ha assignat un valor
     boolean dollarSeted = false;
@@ -48,11 +48,7 @@ public class MainActivity extends AppCompatActivity {
     boolean yenSeted = false;
     boolean yuanSeted = false;
 
-    // Valors de conversio de cada divisa i valor de conversió de la divisa actual
-    float valorDollar = 0;
-    float valorLliura = 0;
-    float valorYen = 0;
-    float valorYuan = 0;
+    // Valor de conversió de la divisa actual
     float valorDeConversioSeleccionat = -1;
 
     // Emmagatzemarà de manera temporal el valor de conversió que introdueix l'usuari
@@ -68,10 +64,14 @@ public class MainActivity extends AppCompatActivity {
     // Revisa quan s'ha inicialitzat alguna divisa per mostrar un missatge informatiu
     boolean primeraDivisaSeleccionada = false;
 
+    int divisaSeleccionada = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        afegirDivisesInicials();
 
         // Es vinculen els elements del view a les variables del codi
         txtInput = (TextView) findViewById(R.id.txtInput);
@@ -90,109 +90,13 @@ public class MainActivity extends AppCompatActivity {
         btnCE= (Button) findViewById(R.id.btnCE);
         btnBorrar = (Button) findViewById(R.id.btnBorrar);
         btnIgual = (Button) findViewById(R.id.btnIgual);
-        btnDollar = (Button) findViewById(R.id.btnDollar);
-        btnLliura = (Button) findViewById(R.id.btnLliures);
-        btnYen = (Button) findViewById(R.id.btnYen);
-        btnYuan = (Button) findViewById(R.id.btnYuan);
-        botonsDivises = new Button[]{btnLliura, btnDollar, btnYen, btnYuan};
+        btnDivisa = (Button) findViewById(R.id.btnDivisa);
+        btnAfegirDivisa = (Button) findViewById(R.id.btnAfegirDivisa);
 
-        // .: 1. BOTONS DIVISES :.
-        // BOTÓ DOLLAR - FUNCIONS
-        btnDollar.setOnClickListener(new View.OnClickListener() {
+        btnDivisa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (dollarSeted) {
-                    valorDeConversioSeleccionat = valorDollar;
-                    canviarColorBotoDivisa(btnDollar);
-                }
-                else {
-                    demanarValorDeConversio("dollar");
-                }
-
-            }
-        });
-
-        btnDollar.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                reiniciarDivisa("dollar");
-                return true;
-            }
-        });
-
-
-        // BOTÓ YEN - FUNCIONS
-        btnYen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (yenSeted) {
-                    valorDeConversioSeleccionat = valorYen;
-                    canviarColorBotoDivisa(btnYen);
-                }
-                else {
-                    demanarValorDeConversio("yen");
-                }
-
-            }
-        });
-
-        btnYen.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                reiniciarDivisa("yen");
-                return true;
-            }
-        });
-
-
-        // BOTÓ YUAN - FUNCIONS
-        btnYuan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (yuanSeted) {
-                    valorDeConversioSeleccionat = valorYuan;
-                    canviarColorBotoDivisa(btnYuan);
-                }
-                else {
-                    demanarValorDeConversio("yuan");
-                }
-
-            }
-        });
-
-        btnYuan.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                reiniciarDivisa("yuan");
-                return true;
-            }
-        });
-
-
-        // BOTÓ LLIURA - FUNCIONS
-        btnLliura.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (lliuraSeted) {
-                    valorDeConversioSeleccionat = valorLliura;
-                    canviarColorBotoDivisa(btnLliura);
-                }
-                else {
-                    demanarValorDeConversio("pound");
-                }
-
-            }
-        });
-
-        btnLliura.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                reiniciarDivisa("pound");
-                return true;
+                alertSeleccionarDivisa();
             }
         });
 
@@ -316,23 +220,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // Canvia els colors dels botons de divises i marca el que es selecciona
-    private void canviarColorBotoDivisa(Button botoSeleccionat) {
-        int posicioBoto = 0;
+    private void afegirDivisesInicials() {
 
-        for (int i = 0; i < botonsDivises.length; i++) {
-            if (botonsDivises[i] != botoSeleccionat) {
-                botonsDivises[i].setBackgroundColor(Color.WHITE);
-            }
-            else {
-                botonsDivises[i].setBackgroundColor(Color.GRAY);
-            }
-        }
+        divisa dollar = new divisa(getString(R.string.btnDollar));
+        divisa yen = new divisa(getString(R.string.btnYen));
+        divisa lliura = new divisa(getString(R.string.btnLliures));
+        divisa yuan = new divisa(getString(R.string.btnYuan));
 
-        if (!primeraDivisaSeleccionada) {
-            mostrarInformacioRestablirDivisa();
-            primeraDivisaSeleccionada = true;
-        }
+        divisesDisponibles.add(dollar);
+        divisesDisponibles.add(yen);
+        divisesDisponibles.add(lliura);
+        divisesDisponibles.add(yuan);
 
     }
 
@@ -346,33 +244,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     // Obre un cuadre de diàlog per que l'usuari introdueixi un valor
-    private void demanarValorDeConversio(String divisa) {
+    private void demanarValorDeConversio(int possicioLlistatDivises) {
         AlertDialog ad;
-        divisa = divisa.toLowerCase();
-        final String divisaSeleccionada = divisa;
-
-        // Segons quin botó cridi aquest mètode canviarà la variable que mostrarà el missatge
-        switch (divisa) {
-
-            case "pound": divisa = getString(R.string.btnLliures);
-                break;
-
-            case "dollar": divisa = getString(R.string.btnDollar);
-                break;
-
-            case "yen": divisa = getString(R.string.btnYen);
-                break;
-
-            case "yuan": divisa = getString(R.string.btnYuan);
-                break;
-
-            default: divisa = "";
-        }
+        final int divisa = possicioLlistatDivises;
+        final String textDivisaSeleccionada = divisesDisponibles.get(divisa).getNomDivisa();
 
         // Prepàra el quadre de diàlog per que tingui un input i personalitza el missatge que mostra segons els definits en @string
         ad = new AlertDialog.Builder(this).create();
-        ad.setTitle(getString(R.string.setValueAlertDialogTitle) + " " + divisa);
-        ad.setMessage(getString(R.string.setValueAlertDialogMessage) + " " + divisa);
+        ad.setTitle(getString(R.string.setValueAlertDialogTitle) + " " + textDivisaSeleccionada);
+        ad.setMessage(getString(R.string.setValueAlertDialogMessage) + " " + textDivisaSeleccionada);
 
         final EditText edtValorDivisa = new EditText(this);
         ad.setView(edtValorDivisa);
@@ -392,35 +272,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     // Comprova quina és la divisa seleccionada per fer les operacions sobre una o altre divisa
-                    switch (divisaSeleccionada) {
-                        case "dollar":
-                            valorDollar = revisarValorConversio;
-                            valorDeConversioSeleccionat = valorDollar;
-                            dollarSeted = true;
-                            canviarColorBotoDivisa(btnDollar);
-                            break;
+                    divisesDisponibles.get(divisa).setValorDivisa(revisarValorConversio);
+                    divisesDisponibles.get(divisa).setDivisaInicialitzada(true);
+                    valorDeConversioSeleccionat = divisesDisponibles.get(divisa).getValorDivisa();
+                    valorDeConversioSeleccionat = revisarValorConversio;
 
-                        case "pound":
-                            valorLliura = revisarValorConversio;
-                            valorDeConversioSeleccionat = valorLliura;
-                            lliuraSeted = true;
-                            canviarColorBotoDivisa(btnLliura);
-                            break;
-
-                        case "yen":
-                            valorYen = revisarValorConversio;
-                            valorDeConversioSeleccionat = valorYen;
-                            yenSeted = true;
-                            canviarColorBotoDivisa(btnYen);
-                            break;
-
-                        case "yuan":
-                            valorYuan = revisarValorConversio;
-                            valorDeConversioSeleccionat = valorYuan;
-                            yuanSeted = true;
-                            canviarColorBotoDivisa(btnYuan);
-                            break;
-                    }
                 }
                 catch (Exception e) {
                     revisarValorConversio = -1;
@@ -438,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
         });
         ad.show();
     }
-
+/*
 
     // Reinicia el valor de la divisa seleccionada
     private void reiniciarDivisa(String divisa) {
@@ -478,6 +334,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+ */
 
     // "Neteja" el TextView Input, per que mostri el missatge predeterminat
     private void netejarInput() {
@@ -613,6 +471,35 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return stringSensePunt;
+
+    }
+
+
+    private void alertSeleccionarDivisa() {
+
+        AlertDialog.Builder alertDialogSeleccionarDivisa = new AlertDialog.Builder(MainActivity.this);
+        alertDialogSeleccionarDivisa.setTitle(getString(R.string.divisa));
+
+        String[] nomsDivises = new String[divisesDisponibles.size()];
+        for (int i = 0; i < divisesDisponibles.size(); i++) {
+            nomsDivises[i] = divisesDisponibles.get(i).getNomDivisa();
+        }
+
+        alertDialogSeleccionarDivisa.setSingleChoiceItems(nomsDivises, divisaSeleccionada, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                if (divisesDisponibles.get(which).isDivisaInicialitzada()) {
+                    divisaSeleccionada = which;
+                    valorDeConversioSeleccionat = divisesDisponibles.get(which).getValorDivisa();
+                    btnDivisa.setText(divisesDisponibles.get(which).getNomDivisa());
+                }
+                else {
+                    demanarValorDeConversio(which);
+                }
+
+            }
+        });
 
     }
 }
