@@ -450,25 +450,30 @@ public class MainActivity extends AppCompatActivity {
             case "pound":
                 valorLliura = 0;
                 lliuraSeted = false;
+                divisa = getString(R.string.btnLliures);
                 break;
 
             case "dollar":
                 valorDollar = 0;
                 dollarSeted = false;
+                divisa = getString(R.string.btnDollar);
                 break;
 
             case "yen":
                 valorYen = 0;
                 yenSeted = false;
+                divisa = getString(R.string.btnYen);
                 break;
 
             case "yuan":
                 valorYuan = 0;
                 yuanSeted = false;
+                divisa = getString(R.string.btnYuan);
                 break;
         }
 
         canviarColorBotoDivisa(null);
+        Toast.makeText(getApplicationContext(), divisa + " " + getString(R.string.messageRestablecerDivisa), Toast.LENGTH_SHORT).show();
         valorDeConversioSeleccionat = -1;
 
     }

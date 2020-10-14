@@ -12,4 +12,5 @@
     <string name="setValueAlertDialogError">This value is not valid</string>
     <string name="doConversionError">Error when converting. Enter a value and select a currency</string>
     <string name="infoRestablecerDivisa">To reset the value of the currency, press and hold the corresponding button</string>
+    <string name="messageRestablecerDivisa">reestablished</string>
 </resources>
