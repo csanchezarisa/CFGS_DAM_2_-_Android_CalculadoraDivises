@@ -40,13 +40,9 @@ public class MainActivity extends AppCompatActivity {
     Button btnIgual;
     Button btnDivisa;
     Button btnAfegirDivisa;
-    ArrayList<divisa> divisesDisponibles = new ArrayList<divisa>();
 
-    // Variables que controlen quan a una divisa se li ha assignat un valor
-    boolean dollarSeted = false;
-    boolean lliuraSeted = false;
-    boolean yenSeted = false;
-    boolean yuanSeted = false;
+    // Llistat que anirà emmagatzemant totes les divises que s'han anat introduint al sistema
+    ArrayList<divisa> divisesDisponibles = new ArrayList<divisa>();
 
     // Valor de conversió de la divisa actual
     float valorDeConversioSeleccionat = -1;
@@ -61,9 +57,7 @@ public class MainActivity extends AppCompatActivity {
     boolean comaPosada = false;
     int decimalsIntroduits = 0;
 
-    // Revisa quan s'ha inicialitzat alguna divisa per mostrar un missatge informatiu
-    boolean primeraDivisaSeleccionada = false;
-
+    // Emmagatzemarà la posició en l'array que ocupa la divisa amb la que s'està treballant
     int divisaSeleccionada = 0;
     int divisaPerRevisar = 0;
 
@@ -72,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Es crida al mètode que inicialitza les 4 primeres divises de manera automàtica
         afegirDivisesInicials();
 
         // Es vinculen els elements del view a les variables del codi
@@ -94,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         btnDivisa = (Button) findViewById(R.id.btnDivisa);
         btnAfegirDivisa = (Button) findViewById(R.id.btnAfegirDivisa);
 
+        // Botó que permet mostrar el menú de divises i seleccionar-ne una
         btnDivisa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Botó que permet mostrar l'alert que permet introduir una nova divisa
         btnAfegirDivisa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -228,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // Mètode que s'executa al inici del programa. Declara les dues principals divises, amb els noms que trobem al fitxer strings
     private void afegirDivisesInicials() {
 
         divisa dollar = new divisa(getString(R.string.btnDollar));
@@ -240,14 +238,6 @@ public class MainActivity extends AppCompatActivity {
         divisesDisponibles.add(lliura);
         divisesDisponibles.add(yuan);
 
-    }
-
-
-    private void mostrarInformacioRestablirDivisa() {
-        View parentLayout = findViewById(android.R.id.content);
-        Snackbar snackbar = Snackbar.make(parentLayout, getString(R.string.infoRestablecerDivisa), Snackbar.LENGTH_LONG);
-
-        snackbar.show();
     }
 
 
@@ -264,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
 
         final EditText edtValorDivisa = new EditText(this);
         ad.setView(edtValorDivisa);
+
 
         // Botó positiu revisarà el valor introdueit. Si es correcte farà les opcions pertinents, sino, mostrarà un misstge d'error
         ad.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.acceptButton), new DialogInterface.OnClickListener() {
@@ -304,48 +295,7 @@ public class MainActivity extends AppCompatActivity {
         });
         ad.show();
     }
-/*
 
-    // Reinicia el valor de la divisa seleccionada
-    private void reiniciarDivisa(String divisa) {
-
-        divisa = divisa.toLowerCase();
-
-        switch (divisa) {
-
-            case "pound":
-                valorLliura = 0;
-                lliuraSeted = false;
-                divisa = getString(R.string.btnLliures);
-                break;
-
-            case "dollar":
-                valorDollar = 0;
-                dollarSeted = false;
-                divisa = getString(R.string.btnDollar);
-                break;
-
-            case "yen":
-                valorYen = 0;
-                yenSeted = false;
-                divisa = getString(R.string.btnYen);
-                break;
-
-            case "yuan":
-                valorYuan = 0;
-                yuanSeted = false;
-                divisa = getString(R.string.btnYuan);
-                break;
-        }
-
-        canviarColorBotoDivisa(null);
-        Toast.makeText(getApplicationContext(), divisa + " " + getString(R.string.messageRestablecerDivisa), Toast.LENGTH_SHORT).show();
-        valorDeConversioSeleccionat = -1;
-
-    }
-
-
- */
 
     // "Neteja" el TextView Input, per que mostri el missatge predeterminat
     private void netejarInput() {
@@ -528,11 +478,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        alertDialogSeleccionarDivisa.setNeutralButton(getString(R.string.restablecerDivisaButton), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                divisesDisponibles.get(divisaPerRevisar).setDivisaInicialitzada(false);
+                btnDivisa.setText(getString(R.string.divisa));
+                divisaPerRevisar = divisaSeleccionada;
+
+            }
+        });
+
         alertDialogSeleccionarDivisa.show();
 
     }
 
 
+    // Mostra un alert que permet afegir una divisa nova. Demana el nom d'aquesta
     private void alertAfegirDivisa() {
 
         AlertDialog alertAfegirdivisa = new AlertDialog.Builder(MainActivity.this).create();
