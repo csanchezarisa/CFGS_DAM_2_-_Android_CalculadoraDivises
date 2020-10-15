@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     boolean primeraDivisaSeleccionada = false;
 
     int divisaSeleccionada = 0;
+    int divisaPerRevisar = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 alertSeleccionarDivisa();
+            }
+        });
+
+        btnAfegirDivisa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertAfegirDivisa();
             }
         });
 
@@ -276,6 +284,8 @@ public class MainActivity extends AppCompatActivity {
                     divisesDisponibles.get(divisa).setDivisaInicialitzada(true);
                     valorDeConversioSeleccionat = divisesDisponibles.get(divisa).getValorDivisa();
                     valorDeConversioSeleccionat = revisarValorConversio;
+                    divisaSeleccionada = divisaPerRevisar;
+                    btnDivisa.setText(divisesDisponibles.get(divisaPerRevisar).getNomDivisa());
 
                 }
                 catch (Exception e) {
@@ -287,7 +297,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Botó negatiu
-        ad.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancelar", new DialogInterface.OnClickListener() {
+        ad.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancelButton), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 revisarValorConversio = -1;
             }
@@ -475,6 +485,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // Mostra l'alert per seleccionar una divisa i, si no té valor, assignar-li
     private void alertSeleccionarDivisa() {
 
         AlertDialog.Builder alertDialogSeleccionarDivisa = new AlertDialog.Builder(MainActivity.this);
@@ -489,17 +500,80 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                if (divisesDisponibles.get(which).isDivisaInicialitzada()) {
-                    divisaSeleccionada = which;
-                    valorDeConversioSeleccionat = divisesDisponibles.get(which).getValorDivisa();
-                    btnDivisa.setText(divisesDisponibles.get(which).getNomDivisa());
+                divisaPerRevisar = which;
+
+            }
+        });
+
+        alertDialogSeleccionarDivisa.setPositiveButton(getString(R.string.acceptButton), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+                if (divisesDisponibles.get(divisaPerRevisar).isDivisaInicialitzada()) {
+                    divisaSeleccionada = divisaPerRevisar;
+                    valorDeConversioSeleccionat = divisesDisponibles.get(divisaPerRevisar).getValorDivisa();
+                    btnDivisa.setText(divisesDisponibles.get(divisaPerRevisar).getNomDivisa());
                 }
                 else {
-                    demanarValorDeConversio(which);
+                    demanarValorDeConversio(divisaPerRevisar);
+                }
+            }
+        });
+
+        alertDialogSeleccionarDivisa.setNegativeButton(getString(R.string.cancelButton), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                divisaPerRevisar = divisaSeleccionada;
+
+            }
+        });
+
+        alertDialogSeleccionarDivisa.show();
+
+    }
+
+
+    private void alertAfegirDivisa() {
+
+        AlertDialog alertAfegirdivisa = new AlertDialog.Builder(MainActivity.this).create();
+        alertAfegirdivisa.setTitle(getString(R.string.afegirDivisa));
+
+        final EditText edtValor = new EditText(this);
+        alertAfegirdivisa.setView(edtValor);
+
+        alertAfegirdivisa.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.acceptButton), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                try {
+
+                    if (edtValor.getText().toString().length() >= 1) {
+
+                        divisa divisaNova = new divisa(edtValor.getText().toString());
+                        divisesDisponibles.add(divisaNova);
+
+                    }
+                    else {
+                        throw new Exception("Valor no vàlid");
+                    }
+
+                }
+                catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.setValueAlertDialogError), Toast.LENGTH_LONG).show();
                 }
 
             }
         });
 
+        alertAfegirdivisa.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancelButton), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // No fa res
+            }
+        });
+
+        alertAfegirdivisa.show();
+
     }
+
 }

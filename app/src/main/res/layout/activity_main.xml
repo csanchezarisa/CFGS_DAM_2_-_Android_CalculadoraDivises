@@ -342,6 +342,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:autoSizeTextType="uniform"
+            android:background="#C0C0C0"
             android:text="@string/divisa" />
 
         <Button
@@ -350,6 +351,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:autoSizeTextType="uniform"
+            android:background="#C0C0C0"
             android:text="@string/afegirDivisa" />
     </LinearLayout>
 

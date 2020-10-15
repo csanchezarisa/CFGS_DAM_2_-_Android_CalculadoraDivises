@@ -9,10 +9,12 @@
     <string name="setValueAlertDialogTitle">Value of </string>
     <string name="setValueAlertDialogMessage">Enter the conversion value of</string>
     <string name="acceptButton">Accept</string>
+    <string name="cancelButton">Cancelar</string>
     <string name="setValueAlertDialogError">This value is not valid</string>
     <string name="doConversionError">Error when converting. Enter a value and select a currency</string>
     <string name="infoRestablecerDivisa">To reset the value of the currency, press and hold the corresponding button</string>
     <string name="messageRestablecerDivisa">reestablished</string>
     <string name="divisa">Currency</string>
     <string name="afegirDivisa">Add currency</string>
+    <string name="restablecerDivisaButton">Restart</string>
 </resources>
